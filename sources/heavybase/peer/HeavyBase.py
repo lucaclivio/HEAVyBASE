@@ -27,10 +27,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Version: 5.8.4.0 - Released: 2014-01-31 09:00:00 [yyyy-mm-dd hh:mm:ss]
+# Version: 5.8.5.0 - Released: 2014-02-04 12:00:00 [yyyy-mm-dd hh:mm:ss]
 #-----------------------------------------------------------------------------
 
-RELEASE="5.8.4"
+RELEASE="5.8.5"
 
 #PROGNAME="HEAVyBASE"
 import sys
@@ -247,7 +247,7 @@ class HeavyBaseService:
                                     ,"5.1.2","5.1.3","5.1.4","5.1.5","5.1.6","5.1.7","5.1.8","5.1.9","5.2.0","5.2.1","5.2.2","5.2.3","5.2.4","5.2.5","5.2.6","5.2.7","5.2.8","5.2.9","5.3.0","5.3.1"
                                     ,"5.3.2","5.3.3","5.3.4","5.3.5","5.3.6","5.3.7","5.3.8","5.3.9","5.4.0","5.4.1","5.4.2","5.4.3","5.4.4","5.4.5","5.4.6","5.4.7","5.4.8","5.4.9","5.5.0","5.5.1"
                                     ,"5.5.2","5.5.3","5.5.4","5.5.5","5.5.6","5.5.7","5.5.8","5.5.9","5.6.0","5.6.1","5.6.2","5.6.3","5.6.4","5.6.5","5.6.6","5.6.7","5.6.8","5.6.9","5.7.0","5.7.1"
-                                    ,"5.7.2","5.7.3","5.7.4","5.7.5","5.7.6","5.7.7","5.7.8","5.7.9","5.8.0","5.8.1","5.8.2","5.8.3","5.8.4"]
+                                    ,"5.7.2","5.7.3","5.7.4","5.7.5","5.7.6","5.7.7","5.7.8","5.7.9","5.8.0","5.8.1","5.8.2","5.8.3","5.8.4","5.8.5"]
         if project_name.find("--")<0: project_name=project_name+"--old"  #case teorically impossible
         for key in compatibilityMatrix:
             if project_name.split("--")[1] in compatibilityMatrix[key]:
@@ -1573,23 +1573,12 @@ for key in active_nodes.keys():
 SetNTLMAPSconfig()
 import subprocess
 if os.name=='nt':
-    # heavybase_service = subprocess.Popen(["pythonw","HeavyBaseService.py"])
     pp_server = subprocess.Popen(["pythonw","ppserver.py","-w","1","-a","-s","heavybase"])
     ntlmaps_server = subprocess.Popen(["pythonw","ntlmaps.py","-c","ntlmaps.cfg"])
 else:
-    # heavybase_service = subprocess.Popen(["python","HeavyBaseService.py"])
     pp_server = subprocess.Popen(["python","-S","ppserver.py","-w","1","-a","-s","heavybase",">/dev/null","2>&1"])
     ntlmaps_server = subprocess.Popen(["python","ntlmaps.py","-c","ntlmaps.cfg",">/dev/null","2>&1"])
-#pp_server = subprocess.Popen(["python","ppserver.py","-a","-s","heavybase"])
 ## pp end
-
-#def HeavyBaseServiceCaller():
-    #import SimpleXMLRPCServer
-    #heavybaseservice_object = HeavyBaseService()
-    #heavybaseservice_server = SimpleXMLRPCServer.SimpleXMLRPCServer(("", 60002))
-    #heavybaseservice_server.register_instance(heavybaseservice_object, allow_dotted_names=True)
-    #print "Listening on port 60002"
-    #heavybaseservice_server.serve_forever()
 
 if LoadCustomSetting("HeavyBaseService")!="0":
     HeavyBaseServiceTask = HeavyBaseServiceStarter()
@@ -11425,11 +11414,12 @@ class HeavyBaseFrame(wx.aui.AuiMDIChildFrame):
         keyvalue=str(maxval+1)
         
         #keyvalue padding - begin
-        if self.keyname in self.arrHeadersTypedesc:
+        try:
             if self.arrHeadersTypedesc[self.keyname][:6]=="format":
                 if keyvalue!="":
                     paddingformat=self.arrHeadersTypedesc[self.keyname][self.arrHeadersTypedesc[self.keyname].find("=")+1:]
                     keyvalue=(paddingformat+str(keyvalue))[-len(paddingformat):]
+        except: pass
         #keyvalue padding - end
         
         if DEBUG_MODE: print "new keyvalue="+self.group_shortcode+"-"+keyvalue

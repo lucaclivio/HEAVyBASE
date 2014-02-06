@@ -30,7 +30,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Version: 5.8.4.0 - Released: 2014-01-31 09:00:00 [yyyy-mm-dd hh:mm:ss]
+# Version: 5.8.5.0 - Released: 2014-02-04 12:00:00 [yyyy-mm-dd hh:mm:ss]
 #-----------------------------------------------------------------------------
 
 class HeavyBaseService_updates:
